@@ -1,60 +1,53 @@
-import axios from 'axios';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
-const getHeaders = () => {
-    const token = localStorage.getItem('token');
-    return { Authorization: `Bearer ${token}` };
-};
+import api from './api';
 
 const internApi = {
     // Profile
     getProfile: async () => {
-        const response = await axios.get(`${API_URL}/intern/profile`, { headers: getHeaders() });
+        const response = await api.get('/intern/profile');
         return response.data;
     },
     updateProfile: async (data) => {
-        const response = await axios.put(`${API_URL}/intern/profile`, data, { headers: getHeaders() });
+        const response = await api.put('/intern/profile', data);
         return response.data;
     },
 
     // Tasks
     getTasks: async () => {
-        const response = await axios.get(`${API_URL}/intern/tasks`, { headers: getHeaders() });
+        const response = await api.get('/intern/tasks');
         return response.data;
     },
     submitTask: async (taskData) => {
-        const response = await axios.post(`${API_URL}/intern/tasks`, taskData, { headers: getHeaders() });
+        const response = await api.post('/intern/tasks', taskData);
         return response.data;
     },
 
     // Assigned Tasks
     getAssignedTasks: async () => {
-        const response = await axios.get(`${API_URL}/intern/assigned-tasks`, { headers: getHeaders() });
+        const response = await api.get('/intern/assigned-tasks');
         return response.data;
     },
     updateAssignedTaskStatus: async (taskId, status) => {
-        const response = await axios.patch(`${API_URL}/intern/assigned-tasks/${taskId}`, { status }, { headers: getHeaders() });
+        const response = await api.patch(`/intern/assigned-tasks/${taskId}`, { status });
         return response.data;
     },
 
     // Reports
     submitReport: async (reportData) => {
-        const response = await axios.post(`${API_URL}/intern/reports`, reportData, { headers: getHeaders() });
+        const response = await api.post('/intern/reports', reportData);
         return response.data;
     },
 
     // Attendance
     checkIn: async (checkInData) => {
-        const response = await axios.post(`${API_URL}/attendance/check-in`, checkInData, { headers: getHeaders() });
+        const response = await api.post('/attendance/check-in', checkInData);
         return response.data;
     },
     checkOut: async (checkOutData) => {
-        const response = await axios.post(`${API_URL}/attendance/check-out`, checkOutData, { headers: getHeaders() });
+        const response = await api.post('/attendance/check-out', checkOutData);
         return response.data;
     },
     getAttendanceHistory: async () => {
-        const response = await axios.get(`${API_URL}/attendance/my-history`, { headers: getHeaders() });
+        const response = await api.get('/attendance/my-history');
         return response.data;
     }
 };

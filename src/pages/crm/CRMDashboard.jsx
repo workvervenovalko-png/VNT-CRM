@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { getCRMDashboardStats } from '../../services/crmApi';
 import CRMLayout from '../../components/crm/CRMLayout';
 import StatCard from '../../components/crm/StatCard';
 import {
@@ -23,8 +23,6 @@ import {
     Activity
 } from 'lucide-react';
 
-const API_BASE = import.meta.env.VITE_API_URL || '';
-
 const CRMDashboard = () => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const navigate = useNavigate();
@@ -39,10 +37,7 @@ const CRMDashboard = () => {
     const fetchDashboardStats = async () => {
         try {
             setLoading(true);
-            const token = localStorage.getItem('token');
-            const { data } = await axios.get(`${API_BASE}/crm/dashboard/stats`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const data = await getCRMDashboardStats();
             
             if (data.success) {
                 setStats(data.data);
