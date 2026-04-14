@@ -69,7 +69,18 @@ export const NotificationProvider = ({ children }) => {
     useEffect(() => {
         // Initialize socket connection using the underlying variable from api service if available, 
         // or create a new reliable connection
-        const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+        // Derive socket URL from the API base URL (remove /api suffix)
+        let socketUrl = import.meta.env.VITE_SOCKET_URL;
+        
+        if (!socketUrl) {
+            const apiBase = import.meta.env.VITE_API_URL;
+            if (apiBase) {
+                socketUrl = apiBase.replace(/\/api\/?$/, '');
+            } else {
+                socketUrl = 'http://localhost:5000';
+            }
+        }
+
         const newSocket = io(socketUrl, {
             withCredentials: true,
             transports: ['polling', 'websocket'], // Start with polling to avoid initial connection errors
