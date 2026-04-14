@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Zoho Colors */
+  --color-zoho-blue: #1c3e6e;
+  --color-zoho-light: #f4f7fa;
+  --color-zoho-accent: #2c7be5;
+  --color-zoho-purple-50: #f5f3ff;
+  --color-zoho-purple-100: #ede9fe;
+  --color-zoho-purple-200: #ddd6fe;
+  --color-zoho-purple-300: #c4b5fd;
+  --color-zoho-purple-400: #a78bfa;
+  --color-zoho-purple-500: #8b5cf6;
+  --color-zoho-purple-600: #7c3aed;
+  --color-zoho-purple-700: #6d28d9;
+}
+
+:root {
+  line-height: 1.6;
+
+  /* Default Purple Pattern */
+  --bg-strip-1: #F5F3FF;
+  --bg-strip-2: #EDE9FE;
+  --bg-strip-3: #DDD6FE;
+  --bg-strip-4: #C4B5FD;
+  --bg-strip-5: #A78BFA;
+  --bg-strip-6: #8B5CF6;
+  --bg-main: #ffffff;
+}
+
+[data-theme='dark'] {
+  --bg-strip-1: #020617;
+  --bg-strip-2: #0f172a;
+  --bg-strip-3: #1e293b;
+  --bg-strip-4: #334155;
+  --bg-strip-5: #475569;
+  --bg-strip-6: #111827;
+  --bg-main: #020617;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  @apply text-slate-700 antialiased selection:bg-indigo-100;
+  background-color: var(--bg-main);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-400/20 rounded-full hover:bg-slate-400/40;
+}
+
+/* Background Pattern */
+.zoho-bg-pattern {
+  background-color: var(--bg-main, #ffffff);
+  background-image: linear-gradient(90deg,
+      var(--bg-strip-1) 0%,
+      var(--bg-strip-1) 16.66%,
+      var(--bg-strip-2) 16.66%,
+      var(--bg-strip-2) 33.33%,
+      var(--bg-strip-3) 33.33%,
+      var(--bg-strip-3) 50%,
+      var(--bg-strip-4) 50%,
+      var(--bg-strip-4) 66.66%,
+      var(--bg-strip-5) 66.66%,
+      var(--bg-strip-5) 83.33%,
+      var(--bg-strip-6) 83.33%,
+      var(--bg-strip-6) 100%);
+  background-size: 100% 100%;
+  background-origin: border-box;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Glass Layer */
+.glass-layer {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  @apply rounded-[2rem] transition-all duration-500 ease-in-out;
+}
+
+.card-glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+  @apply rounded-3xl transition-all duration-500;
+}
+
+.card-glass:hover {
+  @apply -translate-y-1 shadow-xl bg-white/90 border-indigo-100;
+}
+
+/* Buttons */
+.btn-base {
+  @apply px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 cursor-pointer;
+}
+
+.btn-primary {
+  @apply px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 cursor-pointer bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/30;
+}
+
+.btn-secondary {
+  @apply px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 cursor-pointer bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-indigo-400 hover:text-indigo-600;
+}
+
+/* Inputs */
+.input-field {
+  @apply w-full px-5 py-3.5 bg-white border-2 border-slate-100 rounded-[1.25rem] text-sm font-medium placeholder-slate-400 transition-all duration-300 focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 shadow-sm;
+}
+
+.label-text {
+  @apply block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2;
+}
+
+.vnt-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
