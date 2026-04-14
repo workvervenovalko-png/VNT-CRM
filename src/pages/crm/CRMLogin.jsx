@@ -78,47 +78,57 @@ const CRMLogin = () => {
     };
 
 
-    return (
-        <div className="min-h-screen relative overflow-hidden bg-slate-50 flex items-center justify-center p-4">
-            {/* Background Elements */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-emerald-50"></div>
+  return (
+    <div className="min-h-screen relative overflow-hidden bg-white flex items-center justify-center p-4">
+      {/* Sales Premium Mesh Background */}
+      <div className="mesh-gradient opacity-40"></div>
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-sales-primary/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
 
-            {/* Decorative Color Strip */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[300px] bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-500 rotate-[-5deg] blur-3xl opacity-20 animate-pulse"></div>
+      <div className="relative w-full max-w-5xl bg-white/40 backdrop-blur-2xl rounded-[2.5rem] shadow-[0_32px_128px_-32px_rgba(5,150,105,0.25)] border border-white/60 overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+        <div className="vnt-noise-overlay opacity-[0.03]"></div>
 
-            <div className="relative w-full max-w-5xl bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-2xl border border-white overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+        {/* Left Side - Branding */}
+        <div className="md:w-1/2 p-12 bg-sales-primary relative overflow-hidden text-white flex flex-col justify-between">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-700 via-sales-primary to-teal-800"></div>
+          <div className="vnt-noise-overlay opacity-20"></div>
 
-                {/* Left Side - Branding */}
-                <div className="md:w-1/2 p-12 bg-emerald-600 relative overflow-hidden text-white flex flex-col justify-between">
-                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-700"></div>
-                    <div className="absolute inset-0 opacity-20 vnt-noise"></div>
+          <div className="relative z-10 animate-in fade-in slide-in-from-top-4 duration-700">
+            <Link to="/login" className="inline-flex items-center text-emerald-200 hover:text-white transition-all text-[10px] font-black uppercase tracking-widest mb-8 group bg-white/10 px-4 py-2 rounded-full border border-white/10">
+              <ArrowLeft className="w-3 h-3 mr-2 transition-transform group-hover:-translate-x-1" /> Back to Workspace
+            </Link>
+            <h1 className="text-4xl font-[900] tracking-tighter mb-2">VNT<span className="text-emerald-200">Sales.</span></h1>
+            <p className="text-emerald-100 font-bold uppercase tracking-[0.2em] text-[10px] opacity-80">Accelerating Revenue Systems</p>
+          </div>
 
-                    <div className="relative z-10">
-                        <Link to="/login" className="inline-flex items-center text-emerald-200 hover:text-white transition-colors text-xs font-bold mb-8 group">
-                            <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" /> Back to VNT Workspace
-                        </Link>
-                        <h1 className="text-4xl font-[900] tracking-tight mb-2">VNT<span className="text-emerald-200">Sales.</span></h1>
-                        <p className="text-emerald-100 font-medium text-sm">Specialized CRM for growth</p>
-                    </div>
-
-                    <div className="relative z-10 space-y-6">
-                        <div className="glass-layer bg-white/10 border-white/20 p-6 backdrop-blur-md rounded-2xl">
-                            <h3 className="text-lg font-bold mb-2">CRM Features</h3>
-                            <ul className="space-y-3 text-sm text-emerald-50">
-                                <li className="flex items-center gap-2">
-                                    <CheckCircle2 className="w-4 h-4 text-emerald-300" /> Lead Management
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <CheckCircle2 className="w-4 h-4 text-emerald-300" /> Sales Pipeline
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <CheckCircle2 className="w-4 h-4 text-emerald-300" /> Customer Insights
-                                </li>
-                            </ul>
-                        </div>
-                        <p className="text-xs text-emerald-300">Dedicated CRM Access.</p>
-                    </div>
-                </div>
+          <div className="relative z-10 space-y-6">
+            <div className="glass-morphic bg-white/10 border-white/20 p-8 rounded-[2rem] shadow-2xl">
+              <h3 className="text-lg font-black mb-4 tracking-tight">Sales Intelligence</h3>
+              <ul className="space-y-4 text-sm text-emerald-50/90 font-medium">
+                <li className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                  </div>
+                   Lead Conversion Metrics
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                  </div>
+                  Automated Pipeline Sync
+                </li>
+                <li className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                  </div>
+                  Advanced Product Catalog
+                </li>
+              </ul>
+            </div>
+            <p className="text-[10px] font-black text-emerald-300 uppercase tracking-widest leading-relaxed">
+              DEDICATED SALES ACCESS ONLY.
+            </p>
+          </div>
+        </div>
 
                 {/* Right Side - Form */}
                 <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white/50">

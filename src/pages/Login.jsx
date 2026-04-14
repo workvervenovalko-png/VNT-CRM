@@ -93,51 +93,63 @@ const Login = () => {
 
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-slate-50 flex items-center justify-center p-4">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50"></div>
+    <div className="min-h-screen relative overflow-hidden bg-white flex items-center justify-center p-4">
+      {/* Premium Mesh Background */}
+      <div className="mesh-gradient opacity-60"></div>
+      
+      {/* Decorative Blobs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      {/* Decorative Color Strip */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] md:w-[120%] h-[300px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rotate-[-10deg] blur-3xl opacity-30 animate-pulse"></div>
-
-      <div className="relative w-full max-w-5xl bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-2xl border border-white overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+      <div className="relative w-full max-w-5xl bg-white/40 backdrop-blur-2xl rounded-[2.5rem] shadow-[0_32px_128px_-32px_rgba(31,38,135,0.25)] border border-white/60 overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+        <div className="vnt-noise-overlay opacity-[0.03]"></div>
 
         {/* Left Side - Branding */}
         <div className="md:w-1/2 p-12 bg-indigo-600 relative overflow-hidden text-white flex flex-col justify-between">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 to-purple-700"></div>
-          <div className="absolute inset-0 opacity-20 vnt-noise"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-700 via-indigo-600 to-purple-800"></div>
+          <div className="vnt-noise-overlay opacity-20"></div>
 
-          {/* Decorative Circles */}
+          {/* Decorative Elements */}
           <div className="absolute top-10 right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
           <div className="absolute bottom-10 left-10 w-40 h-40 bg-purple-500/30 rounded-full blur-3xl"></div>
 
-          <div className="relative z-10">
-            <h1 className="text-4xl font-[900] tracking-tight mb-2">VNT<span className="text-indigo-200">Workspace.</span></h1>
-            <p className="text-indigo-100 font-medium whitespace-nowrap text-sm">Centralizing your productivity</p>
+          <div className="relative z-10 animate-in fade-in slide-in-from-top-4 duration-700">
+            <h1 className="text-4xl font-[900] tracking-tighter mb-2">VNT<span className="text-indigo-200">Workspace.</span></h1>
+            <p className="text-indigo-100 font-bold uppercase tracking-[0.2em] text-[10px] opacity-80">Centralizing Enterprise Flow</p>
           </div>
 
           <div className="relative z-10 space-y-6">
-            <div className="glass-layer bg-white/10 border-white/20 p-6 backdrop-blur-md rounded-2xl">
-              <h3 className="text-lg font-bold mb-2">Why join us?</h3>
-              <ul className="space-y-3 text-sm text-indigo-50">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300" /> Real-time Analytics
+            <div className="glass-morphic bg-white/10 border-white/20 p-8 rounded-[2rem] shadow-2xl">
+              <h3 className="text-lg font-black mb-4 tracking-tight">Why Workspace?</h3>
+              <ul className="space-y-4 text-sm text-indigo-50/90 font-medium">
+                <li className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                  </div>
+                   Integrated Performance Hub
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300" /> Seamless Collaboration
+                <li className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                  </div>
+                  Secure Geo-Layered Identity
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300" /> Secure Data Management
+                <li className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                  </div>
+                  Real-time Data Sync Architecture
                 </li>
               </ul>
             </div>
-            <p className="text-xs text-indigo-300">© 2026 Verve Nova Tech Workspace. Secure & Specialized.</p>
+            <p className="text-[10px] font-black text-indigo-300 uppercase tracking-widest leading-relaxed">
+              © 2026 Verve Nova Tech.<br />Automated & Specialized Enterprise Systems.
+            </p>
           </div>
         </div>
+
 
         {/* Right Side - Form */}
         <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white/50">
