@@ -20,13 +20,15 @@ const InternLayout = ({ children }) => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const userRole = user.role?.toLowerCase() || 'employee';
+    const pathPrefix = `/${userRole}`;
 
     const navigation = [
-        { name: 'Dashboard', path: '/employee/dashboard', icon: LayoutDashboard },
-        { name: 'Attendance', path: '/employee/attendance', icon: Clock },
-        { name: 'My Profile', path: '/employee/profile', icon: User },
-        { name: 'Daily Tasks', path: '/employee/tasks', icon: CheckSquare },
-        { name: 'Analytics', path: '/employee/reports', icon: BarChart3 },
+        { name: 'Dashboard', path: `${pathPrefix}/dashboard`, icon: LayoutDashboard },
+        { name: 'Attendance', path: `${pathPrefix}/attendance`, icon: Clock },
+        { name: 'My Profile', path: `${pathPrefix}/profile`, icon: User },
+        { name: 'Daily Tasks', path: `${pathPrefix}/${userRole === 'intern' ? 'tasks' : 'tasks'}`, icon: CheckSquare },
+        { name: 'Analytics', path: `${pathPrefix}/reports`, icon: BarChart3 },
     ];
       
     const handleLogout = () => {
@@ -62,8 +64,8 @@ const InternLayout = ({ children }) => {
                         </div>
                         {isSidebarOpen && (
                             <div className="animate-in fade-in slide-in-from-left-4 duration-700">
-                                <h1 className="text-xl font-black text-slate-800 tracking-tighter leading-none">VNT<span className="text-workspace-primary">Intern.</span></h1>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Talent Hub</p>
+                                <h1 className="text-xl font-black text-slate-800 tracking-tighter leading-none">VNT<span className="text-workspace-primary">{userRole === 'intern' ? 'Intern' : 'Workspace'}.</span></h1>
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">{userRole === 'intern' ? 'Talent Hub' : 'Employee Center'}</p>
                             </div>
                         )}
                     </div>
@@ -152,7 +154,7 @@ const InternLayout = ({ children }) => {
                                         <div className="px-2 space-y-1">
                                             <button
                                                 onClick={() => {
-                                                    navigate('/employee/profile');
+                                                    navigate(`${pathPrefix}/profile`);
                                                     setIsProfileOpen(false);
                                                 }}
                                                 className="w-full flex items-center justify-between px-5 py-3.5 text-sm font-bold text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-2xl transition-all group/item"

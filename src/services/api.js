@@ -123,4 +123,32 @@ export const getToken = () => {
   return localStorage.getItem('token');
 };
 
+// Forgot Password Flow
+export const initiateForgotPassword = async (email) => {
+    try {
+        const response = await api.post('/auth/forgot-password', { email });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { message: 'Failed to initiate password reset' };
+    }
+};
+
+export const verifyOTP = async (email, otp) => {
+    try {
+        const response = await api.post('/auth/verify-otp', { email, otp });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { message: 'Invalid or expired OTP' };
+    }
+};
+
+export const resetPassword = async (email, otp, password) => {
+    try {
+        const response = await api.post('/auth/reset-password', { email, otp, password });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { message: 'Failed to reset password' };
+    }
+};
+
 export default api;

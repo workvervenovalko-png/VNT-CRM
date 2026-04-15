@@ -66,7 +66,7 @@ const CRMHeader = ({ onToggleSidebar, isSidebarCollapsed }) => {
     };
 
     return (
-        <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-20">
+        <header className="bg-white/70 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] border-b border-white/40 sticky top-0 z-40 transition-all duration-300">
             <div className="flex items-center justify-between px-4 lg:px-6 py-4">
                 {/* Sidebar Toggle */}
                 <button

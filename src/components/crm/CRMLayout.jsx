@@ -10,10 +10,11 @@ const CRMLayout = ({ children }) => {
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
     return (
-        <div className="min-h-screen bg-white relative overflow-hidden flex">
-            {/* Theme-specific Mesh Background */}
-            <div className="mesh-gradient opacity-40"></div>
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-sales-primary/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+        <div className="min-h-screen bg-slate-50/30 relative overflow-hidden flex">
+            {/* Theme-specific Dynamic Background */}
+            <div className="mesh-gradient opacity-30 animate-pulse-slow"></div>
+            <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-sales-primary/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+            <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[100px] -z-10 animate-pulse delay-1000"></div>
 
             {/* Sidebar */}
             <CRMSidebar isCollapsed={sidebarCollapsed} />

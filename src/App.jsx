@@ -34,6 +34,7 @@ import {
 } from './pages/crm';
 
 import Login from './pages/Login';
+import ForgotPassword from './pages/ForgotPassword';
 
 // Admin Pages
 import {
@@ -142,6 +143,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Navigate to="/login" replace />} />
             <Route path="/crm/login" element={<CRMLogin />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/crm/register" element={<Navigate to="/crm/login" replace />} />
 
             {/* ==================== ADMIN ROUTES ==================== */}

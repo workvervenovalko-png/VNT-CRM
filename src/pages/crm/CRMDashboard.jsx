@@ -110,14 +110,51 @@ const CRMDashboard = () => {
     return (
         <CRMLayout>
             <div className="space-y-6">
-                {/* Welcome Header */}
-                <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
-                    <h1 className="text-2xl font-bold">
-                        Welcome back, {user?.fullName || user?.name || 'User'}! 👋
-                    </h1>
-                    <p className="mt-1 text-blue-100">
-                        Here's what's happening with your CRM today.
-                    </p>
+                {/* Premium Spatial Command Center Header */}
+                <div className="relative group overflow-hidden rounded-[2.5rem] border border-white/40 shadow-2xl">
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-indigo-500 to-purple-600 z-0"></div>
+                    <div className="vnt-noise-overlay opacity-20"></div>
+                    
+                    {/* Decorative Mesh Background inside Header */}
+                    <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+                        <div className="absolute top-[-50%] right-[-10%] w-[300px] h-[300px] bg-white/20 rounded-full blur-[80px] animate-pulse"></div>
+                        <div className="absolute bottom-[-20%] left-[-5%] w-[200px] h-[200px] bg-purple-400/30 rounded-full blur-[60px] animate-pulse delay-700"></div>
+                    </div>
+
+                    <div className="relative z-10 p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                        <div className="animate-in fade-in slide-in-from-left-8 duration-1000">
+                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-indigo-50 text-[10px] font-black uppercase tracking-widest mb-4">
+                                <Activity className="w-3 h-3" /> System Synchronized
+                             </div>
+                            <h1 className="text-4xl md:text-5xl font-[900] text-white tracking-tighter mb-2">
+                                Welcome back, <span className="text-indigo-100 italic">{user?.fullName?.split(' ')[0] || 'User'}!</span> 👋
+                            </h1>
+                            <p className="text-indigo-50/80 font-medium text-lg max-w-lg leading-relaxed">
+                                Your enterprise command center is primed. Here's a high-velocity overview of your revenue systems.
+                            </p>
+                        </div>
+
+                        <div className="flex flex-wrap gap-4 animate-in fade-in slide-in-from-right-8 duration-1000">
+                            <div className="glass-morphic bg-white/10 border-white/20 p-4 rounded-2xl flex items-center gap-4 transition-transform hover:scale-105">
+                                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-white">
+                                    <Target className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-black text-indigo-100 uppercase tracking-widest">Active Goals</p>
+                                    <p className="text-xl font-black text-white">08/12</p>
+                                </div>
+                            </div>
+                            <div className="glass-morphic bg-white/10 border-white/20 p-4 rounded-2xl flex items-center gap-4 transition-transform hover:scale-105">
+                                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-white">
+                                    <TrendingUp className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-black text-indigo-100 uppercase tracking-widest">Performance</p>
+                                    <p className="text-xl font-black text-white">+24.5%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Main Stats Cards */}
