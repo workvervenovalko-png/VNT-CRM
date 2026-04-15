@@ -22,6 +22,7 @@ const HRLayout = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const userRole = (user.role || '').trim().toUpperCase();
 
   const menuItems = [
     { path: '/hr', label: 'Dashboard', icon: LayoutDashboard },

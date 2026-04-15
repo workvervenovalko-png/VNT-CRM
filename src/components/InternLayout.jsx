@@ -20,14 +20,16 @@ const InternLayout = ({ children }) => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const userRole = user.role?.toLowerCase() || 'employee';
+    // Standardize role detection
+    const rawRole = (user.role || 'EMPLOYEE').trim().toUpperCase();
+    const userRole = rawRole.toLowerCase();
     const pathPrefix = `/${userRole}`;
 
     const navigation = [
         { name: 'Dashboard', path: `${pathPrefix}/dashboard`, icon: LayoutDashboard },
         { name: 'Attendance', path: `${pathPrefix}/attendance`, icon: Clock },
         { name: 'My Profile', path: `${pathPrefix}/profile`, icon: User },
-        { name: 'Daily Tasks', path: `${pathPrefix}/${userRole === 'intern' ? 'tasks' : 'tasks'}`, icon: CheckSquare },
+        { name: 'Daily Tasks', path: `${pathPrefix}/tasks`, icon: CheckSquare },
         { name: 'Analytics', path: `${pathPrefix}/reports`, icon: BarChart3 },
     ];
       

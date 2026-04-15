@@ -40,6 +40,7 @@ const menuItems = [
 
 const CRMSidebar = ({ isCollapsed }) => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const userRole = (user.role || '').trim().toUpperCase();
     const location = useLocation();
     const navigate = useNavigate();
 

@@ -105,14 +105,22 @@ const PlaceholderDashboard = () => {
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : {};
 
-  if (!token) {
+  if (!token || !user.role) {
+    if (token) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+    }
     return <Navigate to="/login" replace />;
   }
 
+  // Normalize user role
+  const userRole = user.role.trim().toUpperCase();
+
   if (allowedRoles.length > 0) {
-    const userRole = user.role?.toUpperCase();
+    // Check if user has required permissions
     if (!allowedRoles.includes(userRole)) {
       const dashboards = {
         'ADMIN': '/admin',
@@ -124,7 +132,13 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
       };
 
       const targetPath = dashboards[userRole] || '/login';
-      if (window.location.pathname === targetPath) return children;
+      
+      // Prevent infinite redirect if we are already at the target dashboard
+      if (window.location.pathname === targetPath || window.location.pathname === `${targetPath}/`) {
+        return children;
+      }
+
+      console.warn(`[Auth] Access denied for ${userRole} to ${window.location.pathname}. Redirecting to ${targetPath}`);
       return <Navigate to={targetPath} replace />;
     }
   }
