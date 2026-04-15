@@ -18,7 +18,7 @@ import {
 import NotificationDropdown from './ui/NotificationDropdown';
 
 const AdminLayout = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 1024);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -49,10 +49,10 @@ const AdminLayout = ({ children }) => {
       <div className="vnt-noise-overlay opacity-[0.04] z-0"></div>
       
       {/* Sidebar Overlay */}
-      {!isSidebarOpen && (
+      {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-30 lg:hidden transition-all duration-500"
-          onClick={() => setIsSidebarOpen(true)}
+          onClick={() => setIsSidebarOpen(false)}
         ></div>
       )}
 

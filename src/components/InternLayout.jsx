@@ -16,7 +16,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import NotificationDropdown from './ui/NotificationDropdown';
 
 const InternLayout = ({ children }) => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 1024);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -45,10 +45,10 @@ const InternLayout = ({ children }) => {
             <div className="mesh-gradient opacity-60"></div>
             
             {/* Sidebar Overlay */}
-            {!isSidebarOpen && (
+            {isSidebarOpen && (
                 <div
                     className="fixed inset-0 bg-slate-900/10 backdrop-blur-sm z-30 lg:hidden"
-                    onClick={() => setIsSidebarOpen(true)}
+                    onClick={() => setIsSidebarOpen(false)}
                 ></div>
             )}
 

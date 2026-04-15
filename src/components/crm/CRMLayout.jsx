@@ -7,7 +7,7 @@ import CRMSidebar from './CRMSidebar';
 import CRMHeader from './CRMHeader';
 
 const CRMLayout = ({ children }) => {
-    const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(window.innerWidth <= 1024);
 
     return (
         <div className="min-h-screen bg-slate-50/30 relative overflow-hidden flex">
