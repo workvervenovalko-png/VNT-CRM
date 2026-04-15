@@ -16,7 +16,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import NotificationDropdown from './ui/NotificationDropdown';
 
 const InternLayout = ({ children }) => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user') || '{}');
