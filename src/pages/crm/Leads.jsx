@@ -279,9 +279,9 @@ const Leads = () => {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-800">Leads</h1>
+                        <h1 className="text-2xl font-bold text-gray-800">Clients</h1>
                         <p className="text-gray-500">
-                            Manage your sales leads ({pagination.total} total)
+                            Manage your client pool ({pagination.total} total)
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -336,46 +336,33 @@ const Leads = () => {
                             />
                         </div>
 
-                        {/* Filters */}
-                        <div className="flex flex-wrap items-center gap-3">
-                            <select
-                                value={statusFilter}
-                                onChange={(e) => {
-                                    setStatusFilter(e.target.value);
-                                    setPagination(prev => ({ ...prev, page: 1 }));
-                                }}
-                                className="px-4 py-2.5 border border-gray-200 rounded-xl
-                                           focus:outline-none focus:ring-2 focus:ring-blue-500
-                                           bg-white text-gray-800"
-                            >
-                                <option value="all">All Status</option>
-                                <option value="new">New</option>
-                                <option value="contacted">Contacted</option>
-                                <option value="qualified">Qualified</option>
-                                <option value="proposal">Proposal</option>
-                                <option value="negotiation">Negotiation</option>
-                                <option value="lost">Lost</option>
-                                <option value="converted">Converted</option>
-                            </select>
-
-                            <select
-                                value={sourceFilter}
-                                onChange={(e) => {
-                                    setSourceFilter(e.target.value);
-                                    setPagination(prev => ({ ...prev, page: 1 }));
-                                }}
-                                className="px-4 py-2.5 border border-gray-200 rounded-xl
-                                           focus:outline-none focus:ring-2 focus:ring-blue-500
-                                           bg-white text-gray-800"
-                            >
-                                <option value="all">All Sources</option>
-                                <option value="website">Website</option>
-                                <option value="referral">Referral</option>
-                                <option value="social_media">Social Media</option>
-                                <option value="advertisement">Advertisement</option>
-                                <option value="cold_call">Cold Call</option>
-                                <option value="email_campaign">Email Campaign</option>
-                            </select>
+                        {/* Filters & Tabs */}
+                        <div className="flex flex-col gap-4 w-full">
+                            <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+                                {[
+                                    { id: 'all', label: 'All Clients' },
+                                    { id: 'new', label: 'New Pool' },
+                                    { id: 'contacted', label: 'Follow Up' },
+                                    { id: 'qualified', label: 'Meeting Fixed' },
+                                    { id: 'lost', label: 'Rejected' },
+                                    { id: 'converted', label: 'Converted' }
+                                ].map(tab => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => {
+                                            setStatusFilter(tab.id);
+                                            setPagination(prev => ({ ...prev, page: 1 }));
+                                        }}
+                                        className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 ${
+                                            statusFilter === tab.id 
+                                            ? 'bg-blue-500 text-white shadow-md' 
+                                            : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                        }`}
+                                    >
+                                        {tab.label}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -508,10 +495,26 @@ const Leads = () => {
                                                 )}
                                             </td>
                                             <td className="px-4 py-4">
-                                                <span className={`px-3 py-1 text-xs font-medium rounded-full capitalize
-                                                                 ${statusColors[lead.status] || 'bg-gray-100 text-gray-600'}`}>
-                                                    {lead.status}
-                                                </span>
+                                                <select
+                                                    value={lead.status}
+                                                    onChange={async (e) => {
+                                                        const newStatus = e.target.value;
+                                                        try {
+                                                            await api.put(`/crm/leads/${lead._id}`, { status: newStatus });
+                                                            fetchLeads();
+                                                        } catch (err) {
+                                                            console.error('Error updating status:', err);
+                                                            alert('Failed to update status');
+                                                        }
+                                                    }}
+                                                    className={`px-3 py-1.5 text-xs font-medium rounded-full capitalize border-none outline-none cursor-pointer transition-all hover:ring-2 hover:ring-blue-200 ${statusColors[lead.status] || 'bg-gray-100 text-gray-600'}`}
+                                                >
+                                                    <option value="new" className="bg-white text-gray-800">New Pool</option>
+                                                    <option value="contacted" className="bg-white text-gray-800">Follow Up</option>
+                                                    <option value="qualified" className="bg-white text-gray-800">Meeting Fixed</option>
+                                                    <option value="lost" className="bg-white text-gray-800">Rejected</option>
+                                                    <option value="converted" className="bg-white text-gray-800">Converted</option>
+                                                </select>
                                             </td>
                                             <td className="px-4 py-4">
                                                 <span className={`px-3 py-1 text-xs font-medium rounded-full capitalize

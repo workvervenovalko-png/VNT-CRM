@@ -189,10 +189,10 @@ function App() {
             <Route path="/crm/contacts" element={<ProtectedRoute allowedRoles={['ADMIN', 'HR', 'MANAGER', 'EMPLOYEE', 'SALES']}><Contacts /></ProtectedRoute>} /> */}
 
             {/* ==================== CRM ROUTES ==================== */}
-            <Route path="/crm" element={<ProtectedRoute allowedRoles={['ADMIN', 'HR', 'MANAGER', 'EMPLOYEE', 'SALES']}><CRMDashboard /></ProtectedRoute>} />
+            <Route path="/crm" element={<ProtectedRoute allowedRoles={['ADMIN', 'HR', 'MANAGER', 'EMPLOYEE', 'SALES', 'INTERN']}><CRMDashboard /></ProtectedRoute>} />
             <Route path="/crm/dashboard" element={<Navigate to="/crm" replace />} />
             <Route path="/crm/leads" element={
-              <ProtectedRoute allowedRoles={['ADMIN', 'HR', 'MANAGER', 'EMPLOYEE', 'SALES']}>
+              <ProtectedRoute allowedRoles={['ADMIN', 'HR', 'MANAGER', 'EMPLOYEE', 'SALES', 'INTERN']}>
                 <Leads />
               </ProtectedRoute>
             } />
@@ -232,7 +232,7 @@ function App() {
               </ProtectedRoute>
             } />
             <Route path="/crm/reports" element={
-              <ProtectedRoute allowedRoles={['ADMIN', 'HR', 'MANAGER', 'EMPLOYEE', 'SALES']}>
+              <ProtectedRoute allowedRoles={['ADMIN', 'HR', 'MANAGER', 'EMPLOYEE', 'SALES', 'INTERN']}>
                 <Reports />
               </ProtectedRoute>
             } />

@@ -25,17 +25,8 @@ import {
 
 const menuItems = [
     { path: '/crm', name: 'Dashboard', icon: Home, exact: true },
-    { path: '/crm/leads', name: 'Leads', icon: Target },
-    { path: '/crm/deals', name: 'Deals', icon: Briefcase },
-    { path: '/crm/contacts', name: 'Contacts', icon: Contact },
-    { path: '/crm/accounts', name: 'Accounts', icon: Building2 },
-    { path: '/crm/meetings', name: 'Meetings', icon: Calendar },
-    { path: '/crm/calls', name: 'Calls', icon: Phone },
-    { path: '/crm/products', name: 'Products', icon: Package },
-    { path: '/crm/quotes', name: 'Quotes', icon: FileText },
-    { path: '/crm/reports', name: 'Reports', icon: BarChart3 },
-    { path: "/crm/work-queue", name: "Work Queue", icon: ClipboardList },
-    { path: "/crm/orders", name: "Orders", icon: ShoppingCart }
+    { path: '/crm/leads', name: 'Clients (Leads)', icon: Target },
+    { path: '/crm/reports', name: 'Reports', icon: BarChart3 }
 ];
 
 const CRMSidebar = ({ isCollapsed }) => {
