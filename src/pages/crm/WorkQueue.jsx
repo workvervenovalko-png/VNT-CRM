@@ -5,6 +5,8 @@ import { getWorkTasksApi, addWorkTaskApi } from "../../services/crmApi";
 export default function WorkQueue() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const userRole = (user.role || '').trim().toUpperCase();
 
   const [form, setForm] = useState({
     title: "",
@@ -75,46 +77,48 @@ export default function WorkQueue() {
           <p className="text-blue-100">Manage tasks and team assignments</p>
         </div>
 
-        {/* Add Task */}
-        <div className="bg-white p-5 rounded-xl shadow-md grid grid-cols-4 gap-4">
-          <input
-            className="border p-2 rounded"
-            placeholder="Task Title"
-            value={form.title}
-            onChange={(e) => setForm({ ...form, title: e.target.value })}
-          />
+        {/* Add Task - Only visible to Admins, Managers, and HR */}
+        {['ADMIN', 'MANAGER', 'HR', 'PARTNER'].includes(userRole) && (
+          <div className="bg-white p-5 rounded-xl shadow-md grid grid-cols-4 gap-4">
+            <input
+              className="border p-2 rounded"
+              placeholder="Task Title"
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
+            />
 
-          <input
-            className="border p-2 rounded"
-            placeholder="Assigned To"
-            value={form.assignedTo}
-            onChange={(e) => setForm({ ...form, assignedTo: e.target.value })}
-          />
+            <input
+              className="border p-2 rounded"
+              placeholder="Assigned To"
+              value={form.assignedTo}
+              onChange={(e) => setForm({ ...form, assignedTo: e.target.value })}
+            />
 
-          <select
-            className="border p-2 rounded"
-            value={form.priority}
-            onChange={(e) => setForm({ ...form, priority: e.target.value })}
-          >
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
-          </select>
+            <select
+              className="border p-2 rounded"
+              value={form.priority}
+              onChange={(e) => setForm({ ...form, priority: e.target.value })}
+            >
+              <option>High</option>
+              <option>Medium</option>
+              <option>Low</option>
+            </select>
 
-          <input
-            type="date"
-            className="border p-2 rounded"
-            value={form.dueDate}
-            onChange={(e) => setForm({ ...form, dueDate: e.target.value })}
-          />
+            <input
+              type="date"
+              className="border p-2 rounded"
+              value={form.dueDate}
+              onChange={(e) => setForm({ ...form, dueDate: e.target.value })}
+            />
 
-          <button
-            onClick={addTask}
-            className="col-span-4 bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition"
-          >
-            + Add Task
-          </button>
-        </div>
+            <button
+              onClick={addTask}
+              className="col-span-4 bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition"
+            >
+              + Add Task
+            </button>
+          </div>
+        )}
 
         {/* Task Table */}
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
