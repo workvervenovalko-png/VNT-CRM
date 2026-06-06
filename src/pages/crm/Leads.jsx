@@ -27,7 +27,8 @@ import {
     ArrowUpDown,
     Calendar,
     DollarSign,
-    Tag
+    Tag,
+    MessageCircle
 } from 'lucide-react';
 
 // Redundant API_BASE removed as 'api' service handles it
@@ -48,6 +49,17 @@ const Leads = () => {
     const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0 });
     const [selectedLeads, setSelectedLeads] = useState([]);
     const [submitLoading, setSubmitLoading] = useState(false);
+
+    // Meeting Scheduling State
+    const [scheduleMeetingModalOpen, setScheduleMeetingModalOpen] = useState(false);
+    const [selectedLeadToSchedule, setSelectedLeadToSchedule] = useState(null);
+    const [meetingLoading, setMeetingLoading] = useState(false);
+    const [meetingFormData, setMeetingFormData] = useState({
+        title: '',
+        date: '',
+        time: '10:00',
+        link: ''
+    });
 
     const [formData, setFormData] = useState({
         name: '',
@@ -135,6 +147,44 @@ const Leads = () => {
             alert(error.response?.data?.message || 'Error saving lead');
         } finally {
             setSubmitLoading(false);
+        }
+    };
+
+    // Handle Schedule Meeting Form Submit
+    const handleScheduleMeeting = async (e) => {
+        e.preventDefault();
+        setMeetingLoading(true);
+
+        try {
+            // 1. Create the meeting in backend
+            await api.post('/crm/meetings', {
+                title: meetingFormData.title,
+                meetingType: meetingFormData.link ? 'online' : 'phone',
+                status: 'scheduled',
+                startDate: meetingFormData.date,
+                startTime: meetingFormData.time,
+                endDate: meetingFormData.date,
+                endTime: '11:00', // Default 1 hour later
+                meetingLink: meetingFormData.link,
+                relatedModel: 'Lead',
+                relatedTo: selectedLeadToSchedule._id,
+                sendEmailToClient: true,
+                clientEmail: selectedLeadToSchedule.email,
+                clientName: selectedLeadToSchedule.name
+            });
+
+            // 2. Update lead status to 'qualified' (Meeting Fixed)
+            await api.put(`/crm/leads/${selectedLeadToSchedule._id}`, { status: 'qualified' });
+
+            setScheduleMeetingModalOpen(false);
+            fetchLeads();
+            alert('Meeting scheduled and email sent successfully!');
+            
+        } catch (error) {
+            console.error('Error scheduling meeting:', error);
+            alert('Error scheduling meeting');
+        } finally {
+            setMeetingLoading(false);
         }
     };
 
@@ -499,12 +549,24 @@ const Leads = () => {
                                                     value={lead.status}
                                                     onChange={async (e) => {
                                                         const newStatus = e.target.value;
-                                                        try {
-                                                            await api.put(`/crm/leads/${lead._id}`, { status: newStatus });
-                                                            fetchLeads();
-                                                        } catch (err) {
-                                                            console.error('Error updating status:', err);
-                                                            alert('Failed to update status');
+                                                        if (newStatus === 'qualified') {
+                                                            setSelectedLeadToSchedule(lead);
+                                                            const today = new Date().toISOString().split('T')[0];
+                                                            setMeetingFormData({
+                                                                title: `Discussion with ${lead.name}`,
+                                                                date: today,
+                                                                time: '10:00',
+                                                                link: ''
+                                                            });
+                                                            setScheduleMeetingModalOpen(true);
+                                                        } else {
+                                                            try {
+                                                                await api.put(`/crm/leads/${lead._id}`, { status: newStatus });
+                                                                fetchLeads();
+                                                            } catch (err) {
+                                                                console.error('Error updating status:', err);
+                                                                alert('Failed to update status');
+                                                            }
                                                         }
                                                     }}
                                                     className={`px-3 py-1.5 text-xs font-medium rounded-full capitalize border-none outline-none cursor-pointer transition-all hover:ring-2 hover:ring-blue-200 ${statusColors[lead.status] || 'bg-gray-100 text-gray-600'}`}
@@ -527,6 +589,18 @@ const Leads = () => {
                                             </td>
                                             <td className="px-4 py-4 text-right">
                                                 <div className="flex items-center justify-end gap-1">
+                                                    {lead.phone && (
+                                                        <button
+                                                            onClick={() => {
+                                                                const msg = `Hi ${lead.name},\nThis is regarding your recent inquiry. Please let me know a good time to connect.`;
+                                                                window.open(`https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
+                                                            }}
+                                                            className="p-2 hover:bg-green-50 rounded-lg transition-colors"
+                                                            title="Send WhatsApp"
+                                                        >
+                                                            <MessageCircle size={16} className="text-green-500" />
+                                                        </button>
+                                                    )}
                                                     <button
                                                         onClick={() => handleView(lead)}
                                                         className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -996,6 +1070,80 @@ const Leads = () => {
                                     )}
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Schedule Meeting Modal */}
+                {scheduleMeetingModalOpen && (
+                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                        <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
+                            <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+                                <h2 className="text-xl font-semibold text-gray-800">Schedule Meeting</h2>
+                                <button onClick={() => setScheduleMeetingModalOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg">
+                                    <X size={20} />
+                                </button>
+                            </div>
+                            <form onSubmit={handleScheduleMeeting} className="p-6 space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Meeting Title</label>
+                                    <input
+                                        type="text"
+                                        value={meetingFormData.title}
+                                        onChange={(e) => setMeetingFormData({ ...meetingFormData, title: e.target.value })}
+                                        required
+                                        className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                                        <input
+                                            type="date"
+                                            value={meetingFormData.date}
+                                            onChange={(e) => setMeetingFormData({ ...meetingFormData, date: e.target.value })}
+                                            required
+                                            className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Time</label>
+                                        <input
+                                            type="time"
+                                            value={meetingFormData.time}
+                                            onChange={(e) => setMeetingFormData({ ...meetingFormData, time: e.target.value })}
+                                            required
+                                            className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Meeting Link (Google Meet/Zoom)</label>
+                                    <input
+                                        type="url"
+                                        value={meetingFormData.link}
+                                        onChange={(e) => setMeetingFormData({ ...meetingFormData, link: e.target.value })}
+                                        placeholder="https://meet.google.com/..."
+                                        className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500"
+                                    />
+                                </div>
+                                <div className="pt-4 flex justify-end gap-3 border-t mt-6">
+                                    <button
+                                        type="button"
+                                        onClick={() => setScheduleMeetingModalOpen(false)}
+                                        className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-xl"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={meetingLoading}
+                                        className="px-6 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 disabled:opacity-50 flex items-center gap-2"
+                                    >
+                                        {meetingLoading ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'Schedule & Notify'}
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 )}
