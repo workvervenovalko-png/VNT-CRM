@@ -3,8 +3,10 @@ import api from "./api";
 /* ================= DASHBOARD ================= */
 
 // ➜ CRM Dashboard Stats
-export const getCRMDashboardStats = () =>
-  api.get("/crm/dashboard/stats");
+export const getCRMDashboardStats = async () => {
+  const response = await api.get("/crm/dashboard/stats");
+  return response.data;
+};
 
 
 /* ================= ORDERS ================= */
