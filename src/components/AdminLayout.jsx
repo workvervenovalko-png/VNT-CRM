@@ -157,7 +157,7 @@ const AdminLayout = ({ children }) => {
                 >
                   <div className="text-right hidden sm:block">
                     <div className="text-[13px] font-[900] text-slate-800 leading-none group-hover:text-indigo-600 transition-colors uppercase tracking-tight">{user?.name || user?.fullName || 'Admin'}</div>
-                    <div className="text-[9px] text-indigo-500 font-bold uppercase mt-1 tracking-[0.2em]">Administrator</div>
+                    <div className="text-[9px] text-indigo-500 font-bold uppercase mt-1 tracking-[0.2em]">{user?.role || 'Administrator'}</div>
                   </div>
                   <div className="relative w-10 h-10 rounded-[1rem] bg-gradient-to-br from-indigo-500 to-violet-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-indigo-500/20 overflow-hidden ring-2 ring-white ml-2 sm:ml-0 group-hover:ring-indigo-100 transition-all">
                     <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
