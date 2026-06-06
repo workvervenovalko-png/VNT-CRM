@@ -13,7 +13,8 @@ import {
   ArrowLeft,
   Download,
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  Target
 } from 'lucide-react';
 import NotificationDropdown from './ui/NotificationDropdown';
 
@@ -30,6 +31,7 @@ const AdminLayout = ({ children }) => {
     { name: 'Geo-Tracking', path: '/admin/geo-logs', icon: MapPin },
     { name: 'Export Center', path: '/admin/export', icon: Download },
     { name: 'System Settings', path: '/admin/settings', icon: Settings },
+    { name: 'Sales CRM', path: '/crm', icon: Target },
   ];
 
   const handleLogout = () => {
