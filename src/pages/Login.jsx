@@ -31,11 +31,10 @@ const Login = () => {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
       if (user && user.role) {
         const role = user.role.toUpperCase();
-        if (role === 'ADMIN') navigate('/admin');
+        if (role === 'ADMIN' || role === 'PARTNER') navigate('/admin');
         else if (role === 'HR') navigate('/hr');
         else if (role === 'EMPLOYEE') navigate('/employee/dashboard');
         else if (role === 'INTERN') navigate('/intern/dashboard');
-        else if (role === 'MANAGER') navigate('/manager/dashboard');
         else if (role === 'SALES') navigate('/crm');
         else navigate('/login');
       } else {
@@ -79,11 +78,10 @@ const Login = () => {
         saveAuthData(response.data.token, response.data.user);
 
         const role = response.data.user.role.toUpperCase();
-        if (role === "ADMIN") navigate("/admin");
+        if (role === "ADMIN" || role === "PARTNER") navigate("/admin");
         else if (role === "HR") navigate("/hr");
         else if (role === "EMPLOYEE") navigate("/employee/dashboard");
         else if (role === "INTERN") navigate("/intern/dashboard");
-        else if (role === "MANAGER") navigate("/manager/dashboard");
         else if (role === "SALES") navigate("/crm");
         else navigate("/login");
       }

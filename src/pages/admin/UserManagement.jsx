@@ -26,9 +26,9 @@ const INITIAL_FORM_DATA = {
 const ROLE_OPTIONS = [
   { value: 'EMPLOYEE', label: 'Employee' },
   { value: 'HR', label: 'HR' },
-  { value: 'MANAGER', label: 'Manager' },
+  { value: 'PARTNER', label: 'Partner' },
   { value: 'INTERN', label: 'Intern' },
-  { value: 'SALES', label: 'Partner' }
+  { value: 'SALES', label: 'Sales' }
 ];
 
 const INTERNSHIP_TYPE_OPTIONS = [
@@ -330,7 +330,8 @@ const UserManagement = () => {
           >
             <option value="">All Roles</option>
             <option value="HR">HR</option>
-            <option value="MANAGER">Manager</option>
+            <option value="PARTNER">Partner</option>
+            <option value="SALES">Sales</option>
             <option value="EMPLOYEE">Employee</option>
             <option value="INTERN">Intern</option>
           </select>

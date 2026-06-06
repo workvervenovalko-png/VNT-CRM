@@ -42,7 +42,7 @@ const Products = () => {
         isActive: true
     });
 
-    const canManage = ['ADMIN', 'MANAGER', 'HR'].includes(user.role?.toUpperCase());
+    const canManage = ['ADMIN', 'PARTNER', 'HR'].includes(user.role?.toUpperCase());
 
     const fetchProducts = useCallback(async () => {
         try {

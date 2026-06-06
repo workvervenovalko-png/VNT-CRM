@@ -42,7 +42,7 @@ const CRMSidebar = ({ isCollapsed }) => {
         { path: '/crm/leads', name: 'Clients (Leads)', icon: Target, roles: ['ALL'] },
         { path: '/crm/meetings', name: 'Meetings', icon: Calendar, roles: ['ALL'] },
         { path: '/crm/work-queue', name: 'Work Queue', icon: ClipboardList, roles: ['ALL'] },
-        { path: '/crm/orders', name: 'Orders (Sales)', icon: ShoppingCart, roles: ['ADMIN', 'MANAGER'] },
+        { path: '/crm/orders', name: 'Orders (Sales)', icon: ShoppingCart, roles: ['ADMIN', 'PARTNER'] },
         { path: '/crm/reports', name: 'Reports', icon: BarChart3, roles: ['ALL'] }
     ];
 
@@ -124,7 +124,7 @@ const CRMSidebar = ({ isCollapsed }) => {
                         </div>
                     </div>
                     
-                    {['ADMIN', 'HR', 'MANAGER'].includes(userRole) && (
+                    {['ADMIN', 'HR', 'PARTNER'].includes(userRole) && (
                         <button
                             onClick={() => navigate('/admin')}
                             className={`flex items-center gap-4 w-full px-5 py-3 mb-2 rounded-2xl text-slate-500 hover:text-sales-primary hover:bg-sales-primary/10 transition-all duration-300 group

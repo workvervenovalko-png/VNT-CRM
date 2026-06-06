@@ -659,7 +659,8 @@ export function EmployeeDirectory() {
           </select>
           <select className="px-4 py-2 border border-gray-200 rounded-lg" value={filters.role} onChange={(e) => setFilters({ ...filters, role: e.target.value })}>
             <option value="">All Roles</option>
-            <option value="MANAGER">Manager</option>
+            <option value="PARTNER">Partner</option>
+            <option value="SALES">Sales</option>
             <option value="EMPLOYEE">Employee</option>
             <option value="INTERN">Intern</option>
           </select>
@@ -680,7 +681,7 @@ export function EmployeeDirectory() {
                   </div>
                   <h3 className="font-semibold text-gray-900">{emp.fullName}</h3>
                   <p className="text-sm text-gray-500 mb-2">{emp.designation || emp.role}</p>
-                  <Badge variant={emp.role === 'MANAGER' ? 'warning' : emp.role === 'INTERN' ? 'default' : 'info'}>{emp.role}</Badge>
+                  <Badge variant={emp.role === 'PARTNER' ? 'warning' : emp.role === 'INTERN' ? 'default' : 'info'}>{emp.role}</Badge>
                   <p className="text-sm text-gray-500 mt-3">📍 {emp.department || 'No Department'}</p>
                   <div className="mt-4 space-y-1 text-sm">
                     <p className="text-gray-600">📧 {emp.email}</p>

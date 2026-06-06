@@ -77,8 +77,8 @@ export default function WorkQueue() {
           <p className="text-blue-100">Manage tasks and team assignments</p>
         </div>
 
-        {/* Add Task - Only visible to Admins, Managers, and HR */}
-        {['ADMIN', 'MANAGER', 'HR', 'PARTNER'].includes(userRole) && (
+        {/* Add Task - Only visible to Admins, Partners, and HR */}
+        {['ADMIN', 'PARTNER', 'HR'].includes(userRole) && (
           <div className="bg-white p-5 rounded-xl shadow-md grid grid-cols-4 gap-4">
             <input
               className="border p-2 rounded"

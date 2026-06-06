@@ -38,8 +38,8 @@ const Meetings = () => {
         notes: ''
     });
 
-    const canWrite = ['ADMIN', 'MANAGER', 'HR', 'EMPLOYEE', 'SALES'].includes(user.role?.toUpperCase());
-    const canDelete = ['ADMIN', 'MANAGER', 'HR'].includes(user.role?.toUpperCase());
+    const canWrite = ['ADMIN', 'PARTNER', 'HR', 'EMPLOYEE', 'SALES'].includes(user.role?.toUpperCase());
+    const canDelete = ['ADMIN', 'PARTNER', 'HR'].includes(user.role?.toUpperCase());
 
     const fetchMeetings = useCallback(async () => {
         try {
