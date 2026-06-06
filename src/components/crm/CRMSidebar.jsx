@@ -20,14 +20,10 @@ import {
     ClipboardList,
     ShoppingCart,
     ChevronRight,
-    Sparkles
+    Sparkles,
+    ArrowLeft
 } from 'lucide-react';
 
-const menuItems = [
-    { path: '/crm', name: 'Dashboard', icon: Home, exact: true },
-    { path: '/crm/leads', name: 'Clients (Leads)', icon: Target },
-    { path: '/crm/reports', name: 'Reports', icon: BarChart3 }
-];
 
 const CRMSidebar = ({ isCollapsed }) => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -40,6 +36,19 @@ const CRMSidebar = ({ isCollapsed }) => {
         localStorage.removeItem('user');
         navigate('/login');
     };
+
+    const allMenuItems = [
+        { path: '/crm', name: 'Dashboard', icon: Home, exact: true, roles: ['ALL'] },
+        { path: '/crm/leads', name: 'Clients (Leads)', icon: Target, roles: ['ALL'] },
+        { path: '/crm/meetings', name: 'Meetings', icon: Calendar, roles: ['ALL'] },
+        { path: '/crm/work-queue', name: 'Work Queue', icon: ClipboardList, roles: ['ALL'] },
+        { path: '/crm/orders', name: 'Orders (Sales)', icon: ShoppingCart, roles: ['ADMIN', 'MANAGER'] },
+        { path: '/crm/reports', name: 'Reports', icon: BarChart3, roles: ['ALL'] }
+    ];
+
+    const menuItems = allMenuItems.filter(item => 
+        item.roles.includes('ALL') || item.roles.includes(userRole)
+    );
 
     return (
         <aside 
@@ -114,6 +123,17 @@ const CRMSidebar = ({ isCollapsed }) => {
                             )}
                         </div>
                     </div>
+                    
+                    {['ADMIN', 'HR', 'MANAGER'].includes(userRole) && (
+                        <button
+                            onClick={() => navigate('/admin')}
+                            className={`flex items-center gap-4 w-full px-5 py-3 mb-2 rounded-2xl text-slate-500 hover:text-sales-primary hover:bg-sales-primary/10 transition-all duration-300 group
+                                       ${isCollapsed ? 'justify-center px-0' : ''}`}
+                        >
+                            <ArrowLeft size={20} className="shrink-0 transition-transform group-hover:-translate-x-1" />
+                            {!isCollapsed && <span className="text-sm font-bold tracking-tight text-[12px]">Back to Admin</span>}
+                        </button>
+                    )}
                     
                     <button
                         onClick={handleLogout}
