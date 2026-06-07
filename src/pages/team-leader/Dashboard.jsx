@@ -13,6 +13,11 @@ const TeamLeaderDashboard = () => {
   const [taskData, setTaskData] = useState({ title: '', description: '', dueDate: '' });
   const [assigning, setAssigning] = useState(false);
 
+  // View details modal state
+  const [viewIntern, setViewIntern] = useState(null);
+  const [internDetails, setInternDetails] = useState(null);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+
   useEffect(() => {
     fetchInterns();
   }, []);
@@ -49,6 +54,22 @@ const TeamLeaderDashboard = () => {
       alert(err.response?.data?.message || 'Failed to assign task');
     } finally {
       setAssigning(false);
+    }
+  };
+
+  const handleViewDetails = async (intern) => {
+    setViewIntern(intern);
+    setLoadingDetails(true);
+    try {
+      const res = await api.get(`/team-leader/interns/${intern._id}`);
+      if (res.data.success) {
+        setInternDetails(res.data.data);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to load intern details');
+    } finally {
+      setLoadingDetails(false);
     }
   };
 
@@ -158,13 +179,21 @@ const TeamLeaderDashboard = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <button
-                          onClick={() => setSelectedIntern(intern)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg text-sm font-semibold transition-colors"
-                        >
-                          <PlusCircle size={16} />
-                          Assign Task
-                        </button>
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => handleViewDetails(intern)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 text-slate-600 hover:bg-slate-100 rounded-lg text-sm font-semibold transition-colors"
+                          >
+                            View
+                          </button>
+                          <button
+                            onClick={() => setSelectedIntern(intern)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg text-sm font-semibold transition-colors"
+                          >
+                            <PlusCircle size={16} />
+                            Task
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -250,6 +279,86 @@ const TeamLeaderDashboard = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* View Details Modal */}
+      {viewIntern && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+              <div>
+                <h3 className="text-xl font-bold text-slate-800">Intern Profile</h3>
+                <p className="text-sm text-slate-500 mt-1">{viewIntern.fullName}</p>
+              </div>
+              <button onClick={() => setViewIntern(null)} className="text-slate-400 hover:text-slate-600">Close</button>
+            </div>
+            
+            <div className="p-6">
+              {loadingDetails ? (
+                <p className="text-slate-500">Loading details...</p>
+              ) : internDetails ? (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Email</p>
+                      <p className="text-sm font-medium text-slate-800">{internDetails.email}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Mobile</p>
+                      <p className="text-sm font-medium text-slate-800">{internDetails.mobile}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Department</p>
+                      <p className="text-sm font-medium text-slate-800">{internDetails.department}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Internship Type</p>
+                      <p className="text-sm font-medium text-slate-800">{internDetails.internDetails?.internship?.type || 'N/A'}</p>
+                    </div>
+                  </div>
+
+                  {internDetails.internDetails?.education && (
+                    <div className="pt-4 border-t border-slate-100">
+                      <h4 className="text-sm font-bold text-slate-800 mb-3">Education</h4>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">College</p>
+                          <p className="text-sm font-medium text-slate-800">{internDetails.internDetails.education.collegeName || 'N/A'}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Degree / Branch</p>
+                          <p className="text-sm font-medium text-slate-800">{internDetails.internDetails.education.degree} - {internDetails.internDetails.education.branch}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Passout Year</p>
+                          <p className="text-sm font-medium text-slate-800">{internDetails.internDetails.education.expectedPassoutYear || 'N/A'}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="pt-4 border-t border-slate-100">
+                    <h4 className="text-sm font-bold text-slate-800 mb-3">Project Status</h4>
+                    <p className="text-sm font-medium text-slate-800">
+                      {internDetails.internDetails?.projectWork?.finalProjectSubmitted ? '✅ Submitted' : '⏳ Pending'}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-red-500">Failed to load details.</p>
+              )}
+            </div>
+            
+            <div className="p-4 border-t border-slate-100 bg-slate-50 flex justify-end">
+              <button
+                onClick={() => setViewIntern(null)}
+                className="px-6 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-semibold transition-colors"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

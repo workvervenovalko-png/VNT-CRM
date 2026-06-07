@@ -70,6 +70,10 @@ import TeamAssignment from './pages/admin/TeamAssignment';
 
 // Team Leader Pages
 import TeamLeaderDashboard from './pages/team-leader/Dashboard';
+import TeamTasks from './pages/team-leader/Tasks';
+import TeamAttendance from './pages/team-leader/Attendance';
+import TeamLeaves from './pages/team-leader/Leaves';
+import TeamReports from './pages/team-leader/Reports';
 
 // Context Providers
 import { NotificationProvider } from './context/NotificationContext';
@@ -180,6 +184,10 @@ function App() {
             {/* ==================== TEAM LEADER ROUTES ==================== */}
             <Route path="/team-leader" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamLeaderDashboard /></ProtectedRoute>} />
             <Route path="/team-leader/dashboard" element={<Navigate to="/team-leader" replace />} />
+            <Route path="/team-leader/tasks" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamTasks /></ProtectedRoute>} />
+            <Route path="/team-leader/attendance" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamAttendance /></ProtectedRoute>} />
+            <Route path="/team-leader/leaves" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamLeaves /></ProtectedRoute>} />
+            <Route path="/team-leader/reports" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamReports /></ProtectedRoute>} />
 
             {/* ==================== HR ROUTES ==================== */}
             <Route path="/hr" element={<ProtectedRoute allowedRoles={['HR', 'ADMIN']}><HRDashboard /></ProtectedRoute>} />
