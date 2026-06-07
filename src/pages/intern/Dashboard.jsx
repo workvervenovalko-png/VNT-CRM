@@ -64,7 +64,7 @@ const Dashboard = () => {
             bg: 'bg-emerald-50'
         },
         {
-            label: 'Project Status',
+            label: profile?.projectWork?.projectTitle ? 'Project: ' + profile.projectWork.projectTitle : 'Project Status',
             value: profile?.projectWork?.finalProjectSubmitted ? 'Submitted' : 'Pending',
             trend: profile?.projectWork?.finalProjectSubmitted ? 'Done' : 'In Progress',
             icon: FileCheck,

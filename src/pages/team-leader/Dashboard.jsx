@@ -73,6 +73,32 @@ const TeamLeaderDashboard = () => {
     }
   };
 
+  const handleAssignProject = async (internId) => {
+    const projectTitle = window.prompt('Enter new Project Title for the intern:');
+    if (!projectTitle) return;
+
+    try {
+      const res = await api.post(`/team-leader/interns/${internId}/assign-project`, { projectTitle });
+      if (res.data.success) {
+        alert('Project assigned successfully!');
+        // Update local internDetails state so it reflects immediately
+        setInternDetails(prev => ({
+          ...prev,
+          internDetails: {
+            ...prev.internDetails,
+            projectWork: {
+              ...prev.internDetails?.projectWork,
+              projectTitle: projectTitle
+            }
+          }
+        }));
+      }
+    } catch (err) {
+      alert('Failed to assign project');
+      console.error(err);
+    }
+  };
+
   return (
     <TeamLeaderLayout>
       <div className="p-8">
@@ -340,10 +366,29 @@ const TeamLeaderDashboard = () => {
                   )}
 
                   <div className="pt-4 border-t border-slate-100">
-                    <h4 className="text-sm font-bold text-slate-800 mb-3">Project Status</h4>
-                    <p className="text-sm font-medium text-slate-800">
-                      {internDetails.internDetails?.projectWork?.finalProjectSubmitted ? '✅ Submitted' : '⏳ Pending'}
-                    </p>
+                    <div className="flex justify-between items-center mb-3">
+                      <h4 className="text-sm font-bold text-slate-800">Project Details</h4>
+                      <button
+                        onClick={() => handleAssignProject(internDetails._id)}
+                        className="text-xs px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg font-bold transition-colors"
+                      >
+                        {internDetails.internDetails?.projectWork?.projectTitle ? 'Change Project' : 'Assign Project'}
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Project Title</p>
+                        <p className="text-sm font-medium text-slate-800">
+                          {internDetails.internDetails?.projectWork?.projectTitle || 'Not Assigned'}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Status</p>
+                        <p className="text-sm font-medium text-slate-800">
+                          {internDetails.internDetails?.projectWork?.finalProjectSubmitted ? '✅ Submitted' : '⏳ Pending'}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ) : (
