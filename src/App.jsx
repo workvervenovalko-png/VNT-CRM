@@ -66,6 +66,11 @@ import InternProfile from './pages/intern/Profile';
 import InternReports from './pages/intern/Reports';
 import InternTasks from './pages/intern/Tasks';
 
+import TeamAssignment from './pages/admin/TeamAssignment';
+
+// Team Leader Pages
+import TeamLeaderDashboard from './pages/team-leader/Dashboard';
+
 // Context Providers
 import { NotificationProvider } from './context/NotificationContext';
 import { ToastProvider } from './context/ToastContext';
@@ -165,11 +170,16 @@ function App() {
             <Route path="/admin" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><AdminDashboard /></ProtectedRoute>} />
             <Route path="/admin/dashboard" element={<Navigate to="/admin" replace />} />
             <Route path="/admin/users" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><UserManagement /></ProtectedRoute>} />
+            <Route path="/admin/team-assignment" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><TeamAssignment /></ProtectedRoute>} />
             <Route path="/admin/attendance" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><AttendancePage /></ProtectedRoute>} />
             <Route path="/admin/geo-logs" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><GeoLogsPage /></ProtectedRoute>} />
             <Route path="/admin/reports" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><ReportsPage /></ProtectedRoute>} />
             <Route path="/admin/export" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><ExportCenter /></ProtectedRoute>} />
             <Route path="/admin/settings" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><SettingsPage /></ProtectedRoute>} />
+
+            {/* ==================== TEAM LEADER ROUTES ==================== */}
+            <Route path="/team-leader" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamLeaderDashboard /></ProtectedRoute>} />
+            <Route path="/team-leader/dashboard" element={<Navigate to="/team-leader" replace />} />
 
             {/* ==================== HR ROUTES ==================== */}
             <Route path="/hr" element={<ProtectedRoute allowedRoles={['HR', 'ADMIN']}><HRDashboard /></ProtectedRoute>} />

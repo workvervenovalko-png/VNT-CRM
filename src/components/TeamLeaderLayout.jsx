@@ -18,21 +18,14 @@ import {
 } from 'lucide-react';
 import NotificationDropdown from './ui/NotificationDropdown';
 
-const AdminLayout = ({ children }) => {
+const TeamLeaderLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 1024);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   const navigation = [
-    { name: 'Analytics', path: '/admin', icon: LayoutDashboard, exact: true },
-    { name: 'Team Hub', path: '/admin/users', icon: Users },
-    { name: 'Team Assignment', path: '/admin/team-assignment', icon: Users },
-    { name: 'Attendance', path: '/admin/attendance', icon: Calendar },
-    { name: 'Geo-Tracking', path: '/admin/geo-logs', icon: MapPin },
-    { name: 'Export Center', path: '/admin/export', icon: Download },
-    { name: 'System Settings', path: '/admin/settings', icon: Settings },
-    { name: 'Sales CRM', path: '/crm', icon: Target },
+    { name: 'Dashboard', path: '/team-leader', icon: LayoutDashboard, exact: true },
   ];
 
   const handleLogout = () => {
@@ -223,4 +216,4 @@ const AdminLayout = ({ children }) => {
   );
 };
 
-export default AdminLayout;
+export default TeamLeaderLayout;

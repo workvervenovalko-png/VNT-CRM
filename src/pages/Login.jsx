@@ -80,6 +80,7 @@ const Login = () => {
         const role = response.data.user.role.toUpperCase();
         if (role === "ADMIN" || role === "PARTNER") navigate("/admin");
         else if (role === "HR") navigate("/hr");
+        else if (role === "TEAM_LEADER") navigate("/team-leader");
         else if (role === "EMPLOYEE") navigate("/employee/dashboard");
         else if (role === "INTERN") navigate("/intern/dashboard");
         else if (role === "SALES") navigate("/crm");
