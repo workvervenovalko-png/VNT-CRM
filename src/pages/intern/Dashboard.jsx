@@ -56,9 +56,9 @@ const Dashboard = () => {
             bg: 'bg-indigo-50'
         },
         {
-            label: 'Mentor Assigned',
-            value: profile?.internship?.assignedMentor || 'TBD',
-            trend: 'Verified',
+            label: 'Team Leader',
+            value: profile?.teamLeader?.fullName || profile?.internship?.assignedMentor || 'TBD',
+            trend: profile?.teamLeader ? 'Assigned' : 'Pending',
             icon: UserCheck,
             color: 'text-emerald-600',
             bg: 'bg-emerald-50'

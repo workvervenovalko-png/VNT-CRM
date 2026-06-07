@@ -60,6 +60,16 @@ const TeamLeaderDashboard = () => {
             <h1 className="text-3xl font-bold text-slate-800">My Team</h1>
             <p className="text-slate-500">Manage your assigned interns and track their progress</p>
           </div>
+          <button
+            onClick={() => {
+              if (interns.length === 0) return alert('No interns to assign a task to.');
+              setSelectedIntern(interns[0]);
+            }}
+            className="px-6 py-2 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors flex items-center gap-2"
+          >
+            <PlusCircle size={18} />
+            Create Task
+          </button>
         </div>
 
         {error && (
@@ -95,6 +105,7 @@ const TeamLeaderDashboard = () => {
                   <th className="px-6 py-4 font-medium">Intern</th>
                   <th className="px-6 py-4 font-medium">Contact</th>
                   <th className="px-6 py-4 font-medium">Department</th>
+                  <th className="px-6 py-4 font-medium">Attendance</th>
                   <th className="px-6 py-4 font-medium">Active Tasks</th>
                   <th className="px-6 py-4 font-medium text-right">Actions</th>
                 </tr>
@@ -132,6 +143,15 @@ const TeamLeaderDashboard = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                          intern.todayAttendance === 'PRESENT' ? 'bg-emerald-100 text-emerald-800' :
+                          intern.todayAttendance === 'ABSENT' ? 'bg-rose-100 text-rose-800' :
+                          'bg-amber-100 text-amber-800'
+                        }`}>
+                          {intern.todayAttendance}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
                         <div className="flex items-center gap-1.5 text-sm font-medium text-slate-700">
                           <Briefcase size={16} className="text-indigo-500" />
                           {intern.assignedTasksCount} tasks
@@ -165,6 +185,22 @@ const TeamLeaderDashboard = () => {
             </div>
             
             <form onSubmit={handleAssignTask} className="p-6 space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Select Intern</label>
+                <select
+                  value={selectedIntern?._id || ''}
+                  onChange={(e) => {
+                    const int = interns.find(i => i._id === e.target.value);
+                    if (int) setSelectedIntern(int);
+                  }}
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                >
+                  {interns.map(i => (
+                    <option key={i._id} value={i._id}>{i.fullName}</option>
+                  ))}
+                </select>
+              </div>
+
               <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Task Title</label>
                 <input
