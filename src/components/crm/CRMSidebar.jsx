@@ -61,9 +61,8 @@ const CRMSidebar = ({ isCollapsed }) => {
                 {/* Logo Section */}
                 <div className={`p-8 ${isCollapsed ? 'items-center' : ''} flex flex-col`}>
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-sales-primary rounded-2xl flex items-center justify-center shadow-lg shadow-sales-primary/30 relative group">
-                            <Sparkles className="text-white absolute -top-1 -right-1 w-4 h-4 animate-pulse" />
-                            <TrendingUp className="text-white" size={24} />
+                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-md relative group">
+                            <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
                         </div>
                         {!isCollapsed && (
                             <div className="animate-in fade-in slide-in-from-left-4 duration-500">

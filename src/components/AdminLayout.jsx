@@ -67,9 +67,9 @@ const AdminLayout = ({ children }) => {
                         ${isSidebarOpen ? 'rounded-[2.5rem]' : 'rounded-[2rem]'}`}>
           
           <div className={`p-8 ${isSidebarOpen ? 'mb-4' : 'mb-8 justify-center p-6'} flex items-center gap-4 relative z-10`}>
-            <div className={`shrink-0 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/30 relative group transition-all duration-500 ${isSidebarOpen ? 'w-12 h-12' : 'w-14 h-14 rounded-3xl'}`}>
-              <ShieldCheck className="text-white w-6 h-6" />
-              <div className="absolute inset-0 bg-white/20 rounded-2xl scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+            <div className={`shrink-0 bg-white rounded-2xl flex items-center justify-center shadow-md relative group transition-all duration-500 ${isSidebarOpen ? 'w-12 h-12' : 'w-14 h-14 rounded-3xl'}`}>
+              <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain relative z-10" />
+              <div className="absolute inset-0 bg-indigo-50/50 rounded-2xl scale-0 group-hover:scale-100 transition-transform duration-500"></div>
             </div>
             {isSidebarOpen && (
                 <div className="animate-in fade-in slide-in-from-left-2 duration-500 overflow-hidden">

@@ -104,7 +104,12 @@ const CRMLogin = () => {
                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                  Secure Environment
               </div>
-              <h1 className="text-6xl font-[900] tracking-tighter text-white mb-4">VNT<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Sales.</span></h1>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
+                    <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain" />
+                </div>
+                <h1 className="text-6xl font-[900] tracking-tighter text-white">VNT<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Sales.</span></h1>
+              </div>
               <p className="text-slate-400 font-medium text-lg max-w-md leading-relaxed">
                 The enterprise command center for accelerating revenue systems and intelligent pipeline management.
               </p>

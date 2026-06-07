@@ -114,9 +114,14 @@ const Login = () => {
                  <Shield className="w-3 h-3 animate-pulse" />
                  Enterprise Security Layer
               </div>
-              <h1 className="text-6xl font-[900] tracking-tighter text-white mb-4">
-                VNT<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-300">Workspace.</span>
-              </h1>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 shrink-0">
+                    <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain" />
+                </div>
+                <h1 className="text-6xl font-[900] tracking-tighter text-white">
+                  VNT<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-300">Workspace.</span>
+                </h1>
+              </div>
               <p className="text-slate-400 font-medium text-lg max-w-md leading-relaxed">
                 The unified digital ecosystem for modern enterprise management, productivity, and team synchronization.
               </p>
