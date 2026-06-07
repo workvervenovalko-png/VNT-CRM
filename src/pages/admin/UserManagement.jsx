@@ -28,7 +28,8 @@ const ROLE_OPTIONS = [
   { value: 'HR', label: 'HR' },
   { value: 'PARTNER', label: 'Partner' },
   { value: 'INTERN', label: 'Intern' },
-  { value: 'SALES', label: 'Sales' }
+  { value: 'SALES', label: 'Sales' },
+  { value: 'TEAM_LEADER', label: 'Team Leader' }
 ];
 
 const INTERNSHIP_TYPE_OPTIONS = [
