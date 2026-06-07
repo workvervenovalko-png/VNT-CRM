@@ -26,7 +26,7 @@ const AdminLayout = ({ children }) => {
 
   const navigation = [
     { name: 'Analytics', path: '/admin', icon: LayoutDashboard, exact: true },
-    { name: 'Team Hub', path: '/admin/users', icon: Users },
+    ...(user.role === 'ADMIN' ? [{ name: 'Team Hub', path: '/admin/users', icon: Users }] : []),
     { name: 'Team Assignment', path: '/admin/team-assignment', icon: Users },
     { name: 'Attendance', path: '/admin/attendance', icon: Calendar },
     { name: 'Geo-Tracking', path: '/admin/geo-logs', icon: MapPin },

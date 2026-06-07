@@ -173,7 +173,7 @@ function App() {
             {/* ==================== ADMIN & PARTNER ROUTES ==================== */}
             <Route path="/admin" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><AdminDashboard /></ProtectedRoute>} />
             <Route path="/admin/dashboard" element={<Navigate to="/admin" replace />} />
-            <Route path="/admin/users" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><UserManagement /></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute allowedRoles={['ADMIN']}><UserManagement /></ProtectedRoute>} />
             <Route path="/admin/team-assignment" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><TeamAssignment /></ProtectedRoute>} />
             <Route path="/admin/attendance" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><AttendancePage /></ProtectedRoute>} />
             <Route path="/admin/geo-logs" element={<ProtectedRoute allowedRoles={['ADMIN', 'PARTNER']}><GeoLogsPage /></ProtectedRoute>} />
