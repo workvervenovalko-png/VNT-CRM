@@ -524,12 +524,12 @@ const Leads = () => {
                                                 <div className="space-y-1">
                                                     <div className="flex items-center gap-2 text-sm text-gray-600">
                                                         <Mail size={14} className="flex-shrink-0" />
-                                                        <span className="truncate max-w-[180px]">{lead.email}</span>
+                                                        <a href={`mailto:${lead.email}`} className="truncate max-w-[180px] hover:text-blue-600 hover:underline">{lead.email}</a>
                                                     </div>
                                                     {lead.phone && (
                                                         <div className="flex items-center gap-2 text-sm text-gray-500">
                                                             <Phone size={14} className="flex-shrink-0" />
-                                                            {lead.phone}
+                                                            <a href={`tel:${lead.phone}`} className="hover:text-blue-600 hover:underline">{lead.phone}</a>
                                                         </div>
                                                     )}
                                                 </div>
@@ -942,18 +942,22 @@ const Leads = () => {
                                             <Mail size={16} />
                                             <span className="text-sm">Email</span>
                                         </div>
-                                        <p className="font-medium text-gray-800">
+                                        <a href={`mailto:${viewingLead.lead?.email || viewingLead.email}`} className="font-medium text-gray-800 hover:text-blue-600 hover:underline">
                                             {viewingLead.lead?.email || viewingLead.email}
-                                        </p>
+                                        </a>
                                     </div>
                                     <div className="p-4 bg-gray-50 rounded-xl">
                                         <div className="flex items-center gap-2 text-gray-500 mb-1">
                                             <Phone size={16} />
                                             <span className="text-sm">Phone</span>
                                         </div>
-                                        <p className="font-medium text-gray-800">
-                                            {viewingLead.lead?.phone || viewingLead.phone || '-'}
-                                        </p>
+                                        {viewingLead.lead?.phone || viewingLead.phone ? (
+                                            <a href={`tel:${viewingLead.lead?.phone || viewingLead.phone}`} className="font-medium text-gray-800 hover:text-blue-600 hover:underline">
+                                                {viewingLead.lead?.phone || viewingLead.phone}
+                                            </a>
+                                        ) : (
+                                            <span className="font-medium text-gray-800">-</span>
+                                        )}
                                     </div>
                                     <div className="p-4 bg-gray-50 rounded-xl">
                                         <div className="flex items-center gap-2 text-gray-500 mb-1">

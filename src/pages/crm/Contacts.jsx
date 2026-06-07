@@ -225,13 +225,17 @@ const Contacts = () => {
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-2 text-gray-600">
                                                     <Mail size={14} />
-                                                    {contact.email}
+                                                    <a href={`mailto:${contact.email}`} className="hover:text-blue-600 hover:underline">{contact.email}</a>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-2 text-gray-600">
                                                     <Phone size={14} />
-                                                    {contact.phone || '-'}
+                                                    {contact.phone ? (
+                                                        <a href={`tel:${contact.phone}`} className="hover:text-blue-600 hover:underline">{contact.phone}</a>
+                                                    ) : (
+                                                        '-'
+                                                    )}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
