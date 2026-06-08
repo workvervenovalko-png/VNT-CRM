@@ -18,7 +18,8 @@ import {
   Kanban,
   ClipboardList,
   CalendarDays,
-  FileBarChart
+  FileBarChart,
+  Video
 } from 'lucide-react';
 import NotificationDropdown from './ui/NotificationDropdown';
 
@@ -31,6 +32,7 @@ const TeamLeaderLayout = ({ children }) => {
   const navigation = [
     { name: 'Dashboard', path: '/team-leader', icon: LayoutDashboard, exact: true },
     { name: 'Task Board', path: '/team-leader/tasks', icon: Kanban },
+    { name: 'Meetings', path: '/team-leader/meetings', icon: Video },
     { name: 'Attendance', path: '/team-leader/attendance', icon: CalendarDays },
     { name: 'Leave Requests', path: '/team-leader/leaves', icon: ClipboardList },
     { name: 'Progress Reports', path: '/team-leader/reports', icon: FileBarChart },

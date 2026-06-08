@@ -12,9 +12,11 @@ import {
   Activity,
   Clock
 } from 'lucide-react';
-// Recharts removed
+import API from '../../services/api';
+
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
+  const [meetings, setMeetings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -25,8 +27,14 @@ const Dashboard = () => {
   const fetchDashboardStats = async () => {
     try {
       setLoading(true);
-      const response = await api.getDashboardStats();
-      setStats(response.data.data);
+      const [statsRes, meetingsRes] = await Promise.all([
+        api.getDashboardStats(),
+        API.get('/meetings').catch(() => ({ data: { success: false, data: [] } }))
+      ]);
+      setStats(statsRes.data.data);
+      if (meetingsRes.data?.success) {
+        setMeetings(meetingsRes.data.data);
+      }
     } catch (err) {
       console.error('Dashboard error:', err);
       setError(err.response?.data?.message || 'Failed to load dashboard');
@@ -235,6 +243,45 @@ const Dashboard = () => {
                 )}
               </tbody>
             </table>
+          </div>
+        </div>
+
+        {/* Upcoming Meetings for Admin/Partner */}
+        <div className="bg-white/60 backdrop-blur-3xl rounded-[2.5rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-10 mt-8 relative overflow-hidden">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-2xl font-[900] text-slate-800 tracking-tight">Upcoming Meetings</h3>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {meetings.filter(m => new Date(m.scheduledAt) > new Date()).length === 0 ? (
+                <div className="col-span-full text-center text-slate-400 font-bold text-sm py-12">No upcoming meetings</div>
+            ) : (
+                meetings.filter(m => new Date(m.scheduledAt) > new Date()).map(meeting => (
+                    <div key={meeting._id} className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col">
+                        <div className="flex justify-between items-start mb-4">
+                            <h4 className="font-bold text-slate-800 text-lg">{meeting.title}</h4>
+                        </div>
+                        <div className="space-y-3 mb-6 flex-1">
+                            <p className="text-sm text-slate-600 flex items-center gap-2 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                <Clock size={16} className="text-indigo-500" />
+                                <span className="font-semibold">{new Date(meeting.scheduledAt).toLocaleString()}</span>
+                            </p>
+                            <div className="text-xs text-slate-500">
+                                <p className="font-bold uppercase tracking-wider text-[10px] text-slate-400 mb-1">Host</p>
+                                <p className="font-semibold text-slate-700">{meeting.host?.fullName}</p>
+                            </div>
+                        </div>
+                        <a
+                            href={meeting.meetLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full flex items-center justify-center gap-2 py-2.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-xl font-bold transition-colors mt-auto"
+                        >
+                            Join Meeting
+                        </a>
+                    </div>
+                ))
+            )}
           </div>
         </div>
       </div>

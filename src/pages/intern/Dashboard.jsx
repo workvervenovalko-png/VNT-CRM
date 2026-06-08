@@ -11,11 +11,14 @@ import {
     PlayCircle,
     Briefcase,
     UserCheck,
-    BookOpen
+    BookOpen,
+    Video,
+    Link as LinkIcon
 } from 'lucide-react';
 // Recharts removed
 const Dashboard = () => {
     const [profile, setProfile] = useState(null);
+    const [meetings, setMeetings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -26,8 +29,14 @@ const Dashboard = () => {
     const fetchProfile = async () => {
         try {
             setLoading(true);
-            const res = await internApi.getProfile();
-            setProfile(res.data);
+            const [profileRes, meetingsRes] = await Promise.all([
+                internApi.getProfile(),
+                internApi.get('/meetings').catch(() => ({ data: { success: false, data: [] } }))
+            ]);
+            setProfile(profileRes.data);
+            if (meetingsRes.data?.success) {
+                setMeetings(meetingsRes.data.data);
+            }
         } catch (err) {
             console.error('Error fetching profile:', err);
             setError('Failed to load dashboard data');
@@ -148,6 +157,40 @@ const Dashboard = () => {
                             ))}
                             {(!profile?.academicWork?.dailyTaskUpdate || profile.academicWork.dailyTaskUpdate.length === 0) && (
                                 <div className="text-center text-slate-400 text-xs py-10">No recent updates</div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Upcoming Meetings Widget */}
+                    <div className="glass-layer p-10 bg-emerald-600/5 border-emerald-200/20">
+                        <div className="flex items-center justify-between mb-10">
+                            <h3 className="text-xl font-[900] text-slate-800 tracking-tight uppercase tracking-widest text-xs">Upcoming Meetings</h3>
+                            <Video className="w-6 h-6 text-emerald-600 opacity-20" />
+                        </div>
+                        <div className="space-y-4">
+                            {meetings.filter(m => new Date(m.scheduledAt) > new Date()).length === 0 ? (
+                                <div className="text-center text-slate-400 text-xs py-10">No upcoming meetings</div>
+                            ) : (
+                                meetings.filter(m => new Date(m.scheduledAt) > new Date()).map(meeting => (
+                                    <div key={meeting._id} className="flex items-center justify-between p-4 bg-white/60 border border-transparent hover:border-white rounded-2xl transition-all group shadow-sm">
+                                        <div>
+                                            <h4 className="font-bold text-slate-800 text-sm">{meeting.title}</h4>
+                                            <p className="text-xs text-slate-500 flex items-center gap-1 mt-1">
+                                                <Clock size={12} className="text-emerald-500" />
+                                                {new Date(meeting.scheduledAt).toLocaleString()}
+                                            </p>
+                                            <p className="text-[10px] text-slate-400 mt-1 uppercase tracking-wider">Host: {meeting.host?.fullName}</p>
+                                        </div>
+                                        <a
+                                            href={meeting.meetLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="px-4 py-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-xl text-xs font-bold transition-colors flex items-center gap-1 border border-emerald-200"
+                                        >
+                                            <LinkIcon size={14} /> Join
+                                        </a>
+                                    </div>
+                                ))
                             )}
                         </div>
                     </div>

@@ -74,6 +74,7 @@ import TeamTasks from './pages/team-leader/Tasks';
 import TeamAttendance from './pages/team-leader/Attendance';
 import TeamLeaves from './pages/team-leader/Leaves';
 import TeamReports from './pages/team-leader/Reports';
+import TeamMeetings from './pages/team-leader/Meetings';
 
 // Context Providers
 import { NotificationProvider } from './context/NotificationContext';
@@ -188,6 +189,7 @@ function App() {
             <Route path="/team-leader/attendance" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamAttendance /></ProtectedRoute>} />
             <Route path="/team-leader/leaves" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamLeaves /></ProtectedRoute>} />
             <Route path="/team-leader/reports" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamReports /></ProtectedRoute>} />
+            <Route path="/team-leader/meetings" element={<ProtectedRoute allowedRoles={['TEAM_LEADER', 'ADMIN']}><TeamMeetings /></ProtectedRoute>} />
 
             {/* ==================== HR ROUTES ==================== */}
             <Route path="/hr" element={<ProtectedRoute allowedRoles={['HR', 'ADMIN']}><HRDashboard /></ProtectedRoute>} />
